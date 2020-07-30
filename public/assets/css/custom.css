@@ -1,0 +1,16 @@
+/* Add here all your CSS customizations */
+
+.modal-title {
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+
+.profile-image-outer-container .profile-image-input {
+    position: relative;
+    top: -30px;
+    height: 100%;
+    opacity: 0;
+    z-index: 3;
+    cursor: pointer;
+}
