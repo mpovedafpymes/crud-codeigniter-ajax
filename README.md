@@ -1,3 +1,5 @@
+# RUTA (base_url)/inventory/settings
+
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?
