@@ -35,6 +35,12 @@ $routes->setAutoRoute(true);
 $routes->group('inventory', function($routes){
 	$routes->add('settings', 'Inventory\Settings::index');
 	$routes->add('warehouse', 'Inventory\Settings::getWarehouse');
+	$routes->add('rack', 'Inventory\Settings::getRack');
+	$routes->add('section', 'Inventory\Settings::getSection');
+	$routes->add('division', 'Inventory\Settings::getDivision');
+	$routes->add('house', 'Inventory\Settings::getHouse');
+	$routes->add('brand', 'Inventory\Settings::getBrand');
+
 });
 
 /**

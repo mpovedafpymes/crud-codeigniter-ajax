@@ -14,19 +14,9 @@ class RacksModel extends Model
         'rack'
     ];
 
-        
-    /**
-     * Retorna todos los Racks
-     * 
-     * Estos son la estructura para almacenar los productos, 
-     * conformando el segundo parametro de la ubicación
-     * y su asignación es númerica
-     * (warehouse, rack, section, division) 
-     *
-     * @return void
-     */
-    public function getAllRacks()
-    {
-        return $this->findAll();
-    }
+    protected $useTimestamps = true;
+
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+
 }

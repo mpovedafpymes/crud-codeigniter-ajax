@@ -2,14 +2,13 @@
 
 use CodeIgniter\Model;
 
-class WarehousesModel extends Model
+class HousesModel extends Model
 {
-    protected $table      = 'warehouses';
-    protected $primaryKey = 'id_warehouse';
+    protected $table      = 'houses';
+    protected $primaryKey = 'id_house';
     
     protected $allowedFields = [
-        'warehouse', 
-        'warehouse_type', 
+        'house', 
         'status'
     ];
 
@@ -19,18 +18,18 @@ class WarehousesModel extends Model
     protected $updatedField = 'updated_at';
 
     /**
-     * Retorna todas las bodegas si no trae parametro id
+     * Retorna todas las casas si no trae parametro id
      *
      * @param  mixed $id
      * @return void
      */
-    public function getWarehouses($id = null)
+    public function getHouses($id = null)
     {
         if($id === null)
         {
             return $this->findAll();
         }
 
-        return $this->asArray()->where(['id_warehouse' => $id])->first();
+        return $this->asArray()->where(['id_house' => $id])->first();
     }
 }

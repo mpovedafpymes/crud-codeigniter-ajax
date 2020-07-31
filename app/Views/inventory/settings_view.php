@@ -40,9 +40,11 @@
 
     <!-- start: content -->
     <div class="row">
+        <!-- start: location -->
         <div class="col-lg-6">
             <h4>Ubicación</h4>
             <div class="toggle toggle-primary toggle-sm" data-plugin-toggle>
+
                 <!-- start: warehouse -->
                 <section class="toggle active card">
                     <label>Bodegas</label>
@@ -69,124 +71,144 @@
                         </div>
                     </div>
                 </section>
-                <!-- start: warehouse -->
+                <!-- end: warehouse -->
 
+                <!-- start: rack -->
                 <section class="toggle">
-                    <label>Rack</label>
+                    <label>Racks</label>
                     <div class="toggle-content">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <button id="addToTable" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
+                                        <button id="add_rack" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-responsive-md table-hover table-sm mb-0">
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-rack">
                                 <thead>
                                     <tr>
                                         <th>Rack</th>
-                                        <th>Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php foreach ($racks as $rack) : ?>
-                                        <tr>
-                                            <td><?= $rack['rack'] ?></td>
-                                            <td>Acción</td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
                 </section>
+                <!-- end: rack -->
+
+                <!-- start: section -->
                 <section class="toggle">
-                    <label>Sección</label>
+                    <label>Secciones</label>
                     <div class="toggle-content">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <button id="addToTable" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
+                                        <button id="add_section" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-responsive-md table-hover table-sm mb-0">
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-section">
                                 <thead>
                                     <tr>
                                         <th>Sección</th>
-                                        <th>Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php foreach ($sections as $section) : ?>
-                                        <tr>
-                                            <td><?= $section['section'] ?></td>
-                                            <td>Acción</td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
                 </section>
+                <!-- end: section -->
+
+                <!-- start: division -->
                 <section class="toggle">
-                    <label>División</label>
+                    <label>Divisiones</label>
                     <div class="toggle-content">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <button id="addToTable" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
+                                        <button id="add_division" class="mb-1 mt-1 mr-1 btn btn-xs btn-primary">Crear +</button>
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-responsive-md table-hover table-sm mb-0">
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-division">
                                 <thead>
                                     <tr>
                                         <th>División</th>
-                                        <th>Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php foreach ($divisions as $division) : ?>
-                                        <tr>
-                                            <td><?= $division['division'] ?></td>
-                                            <td>Acción</td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
                 </section>
+                <!-- end: division -->
             </div>
         </div>
+        <!-- end: location -->
+        <!-- start: product specifications -->
         <div class="col-lg-6">
-            <h4>Large</h4>
+            <h4>Especificaciones del Producto</h4>
             <div class="toggle toggle-primary toggle-lg" data-plugin-toggle>
-                <section class="toggle active">
-                    <label>Curabitur eget leo at velit imperdiet vague iaculis vitaes?</label>
+                <!-- start: house -->
+                <section class="toggle active card">
+                    <label>Casas</label>
                     <div class="toggle-content">
-                        <p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien.</p>
-                        <p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien.</p>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <button id="add_house" type="button" class="mb-1 mt-1 mr-1 btn btn-xs btn btn-primary" data-toggle="modal">Crear +</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-house">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Casa</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </section>
-                <section class="toggle">
-                    <label>Curabitur eget leo at imperdiet vague iaculis vitaes?</label>
+                <!-- end: house -->
+
+                <!-- start: brand -->
+                <section class="toggle active card">
+                    <label>Marcas</label>
                     <div class="toggle-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget leo at velit imperdiet varius. In eu ipsum vitae velit congue iaculis vitae at risus. Nullam tortor nunc, bibendum vitae semper a, volutpat eget massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fringilla, orci sit amet posuere auctor.</p>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <button id="add_brand" type="button" class="mb-1 mt-1 mr-1 btn btn-xs btn btn-primary" data-toggle="modal">Crear +</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-brand">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>casa_id</th>
+                                        <th>Marca</th>
+                                        <th>Casa</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </section>
-                <section class="toggle">
-                    <label>Curabitur eget leo at velit imperdiet vague iaculis vitaes?</label>
-                    <div class="toggle-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget leo at velit imperdiet varius. In eu ipsum vitae velit congue iaculis vitae at risus. Nullam tortor nunc, bibendum vitae semper a, volutpat eget massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fringilla, orci sit amet posuere auctor, orci eros pellentesque odio, nec pellentesque erat ligula nec massa. Aenean consequat lorem ut felis ullamcorper posuere gravida tellus faucibus. Maecenas dolor elit, pulvinar eu vehicula eu, consequat et lacus. Duis et purus ipsum. In auctor mattis ipsum id molestie. Donec risus nulla, fringilla a rhoncus vitae, semper a massa. Vivamus ullamcorper, enim sit amet consequat laoreet, tortor tortor dictum urna, ut egestas urna ipsum nec libero. Nulla justo leo, molestie vel tempor nec, egestas at massa. Aenean pulvinar, felis porttitor iaculis pulvinar, odio orci sodales odio, ac pulvinar felis quam sit.</p>
-                    </div>
-                </section>
+                <!-- end: brand -->
             </div>
         </div>
+        <!-- end: product specifications -->
     </div>
     <!-- end: content -->
 
@@ -225,9 +247,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <?= form_label('Estado:', 'state', $attributes_label); ?>
+                                <?= form_label('Estado:', 'status', $attributes_label); ?>
                                 <div class="col-sm-8">
-                                    <?= form_dropdown('state', ['1' => 'Activo', '0' => 'Inactivo'], '1', $attributes_text); ?>
+                                    <?= form_dropdown('status', ['1' => 'Activo', '0' => 'Inactivo'], '1', $attributes_text); ?>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +258,233 @@
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <input type='submit' value='Guardar' class='btn btn-primary'>
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal rack -->
+<div class="modal fade modal-rack" tabindex="-1" role="dialog" aria-labelledby="rackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title"><?= isset($id) ? "Editar Rack" : "Crear Rack" ?></h2>
+                </header>
+                <?= form_open('inventory/settings/addRack', ['class' => 'form-horizontal', 'id' => 'formrack']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error_rack">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('Rack:', 'rack', $attributes_label); ?>
+                                <div class="col-sm-8">
+
+                                    <?= form_input('rack', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal section -->
+<div class="modal fade modal-section" tabindex="-1" role="dialog" aria-labelledby="sectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Crear Sección</h2>
+                </header>
+                <?= form_open('inventory/settings/addSection', ['class' => 'form-horizontal', 'id' => 'formsection']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error_section">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('Sección:', 'section', $attributes_label); ?>
+                                <div class="col-sm-8">
+
+                                    <?= form_input('section', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal division -->
+<div class="modal fade modal-division" tabindex="-1" role="dialog" aria-labelledby="divisionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title">Crear División</h2>
+                </header>
+                <?= form_open('inventory/settings/addDivision', ['class' => 'form-horizontal', 'id' => 'formdivision']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error_division">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('División:', 'division', $attributes_label); ?>
+                                <div class="col-sm-8">
+
+                                    <?= form_input('division', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal house -->
+<div class="modal fade modal-house" tabindex="-1" role="dialog" aria-labelledby="houseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title"><?= isset($id) ? "Editar Casa" : "Crear Casa" ?></h2>
+                </header>
+                <?= form_open('inventory/settings/addHouse', ['class' => 'form-horizontal', 'id' => 'formhouse'], ['id_house' => isset($id) ? $id : '']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error-house">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('Casa:', 'house', $attributes_label); ?>
+                                <div class="col-sm-8">
+
+                                    <?= form_input('house', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <?= form_label('Estado:', 'status', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <?= form_dropdown('status', ['1' => 'Activo', '0' => 'Inactivo'], '1', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal brand -->
+<div class="modal fade modal-brand" tabindex="-1" role="dialog" aria-labelledby="houseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title"><?= isset($id) ? "Editar Marca" : "Crear Marca" ?></h2>
+                </header>
+                <?= form_open('inventory/settings/addHBrand', ['class' => 'form-horizontal', 'id' => 'formbrand'], ['id_brand' => isset($id) ? $id : '']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error-brand">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('Marca:', 'brand', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <?= form_input('brand', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <?= form_label('Estado:', 'status', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <?= form_dropdown('status', ['1' => 'Activo', '0' => 'Inactivo'], '1', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
                             <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
                         </div>
                     </div>
