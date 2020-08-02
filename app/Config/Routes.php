@@ -39,8 +39,9 @@ $routes->group('inventory', function($routes){
 	$routes->add('section', 'Inventory\Settings::getSection');
 	$routes->add('division', 'Inventory\Settings::getDivision');
 	$routes->add('house', 'Inventory\Settings::getHouse');
+	$routes->add('selecthouse', 'Inventory\Settings::getSelectHouse');
 	$routes->add('brand', 'Inventory\Settings::getBrand');
-
+	$routes->add('category', 'Inventory\Settings::getCategory');
 });
 
 /**

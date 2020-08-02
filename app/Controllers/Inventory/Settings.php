@@ -9,6 +9,7 @@ use App\Models\inventory\SectionsModel;
 use App\Models\inventory\DivisionsModel;
 use App\Models\inventory\HousesModel;
 use App\Models\inventory\BrandsModel;
+use App\Models\inventory\CategoriesModel;
 
 class Settings extends BaseController
 {
@@ -24,12 +25,12 @@ class Settings extends BaseController
 
 		$service = \Config\Services::request();
 
+
 		$data = [
 			'nav_module'		=> $service->uri->getSegment(1),
 			'nav_section'		=> $service->uri->getSegment(2),
 			'attributes_label'	=> ['class' => 'col-sm-4 control-label text-sm-right pt-2'],
-			'attributes_text'	=> ['class' => 'form-control'],
-
+			'attributes_text'	=> ['class' => 'form-control text-capitalize'],
 		];
 
 		return view('inventory/settings_view', $data);
@@ -81,10 +82,8 @@ class Settings extends BaseController
 	{
 		if ($this->request->isAJAX()) :
 
-
-			helper(['form', 'url']);
+			helper(['form']);
 			$warehousesModel = new WarehousesModel();
-
 
 			if ($this->request->getMethod() !== 'post') :
 				return redirect()->to(base_url('inventory/settings'));
@@ -93,10 +92,11 @@ class Settings extends BaseController
 			$validate = $this->validate([
 				'warehouse' => [
 					'label' => 'Bodega',
-					'rules' => 'required|max_length[5]',
+					'rules' => 'required|max_length[5]|is_unique[warehouses.warehouse]',
 					'errors' => [
-						'required' => 'En campo {field} es obligatorio.',
-						'max_length' => 'En campo {field} no puede exceder los 5 caracteres de longitud.'
+						'required' => 'El campo {field} es obligatorio.',
+						'max_length' => 'El campo {field} no puede exceder los {param} caracteres de longitud.',
+						'is_unique' => 'El campo {field} debe contener un valor único.'
 					],
 				]
 			]);
@@ -108,7 +108,7 @@ class Settings extends BaseController
 			else :
 				$warehousesModel->save([
 					'id_warehouse'	=> $this->request->getVar('id_warehouse'),
-					'warehouse'		=> ucfirst($this->request->getVar('warehouse')),
+					'warehouse'		=> ucwords(strtolower($this->request->getVar('warehouse'))),
 					'warehouse_type' => $this->request->getVar('warehouse_type'),
 					'status'			=> $this->request->getVar('status'),
 				]);
@@ -187,10 +187,8 @@ class Settings extends BaseController
 	{
 		if ($this->request->isAJAX()) :
 
-
-			helper(['form', 'url']);
+			helper(['form']);
 			$racksModel = new RacksModel();
-
 
 			if ($this->request->getMethod() !== 'post') :
 				return redirect()->to(base_url('inventory/settings'));
@@ -256,10 +254,8 @@ class Settings extends BaseController
 	{
 		if ($this->request->isAJAX()) :
 
-
 			helper(['form', 'url']);
 			$sectionsModel = new SectionsModel();
-
 
 			if ($this->request->getMethod() !== 'post') :
 				return redirect()->to(base_url('inventory/settings'));
@@ -270,8 +266,8 @@ class Settings extends BaseController
 					'label' => 'Sección',
 					'rules' => 'required|alpha|is_unique[sections.section]',
 					'errors' => [
-						'required' => 'En campo {field} es obligatorio.',
-						'alpha' => 'En campo {field} solo puede contener caracteres alfabéticos.',
+						'required' => 'El campo {field} es obligatorio.',
+						'alpha' => 'El campo {field} solo puede contener caracteres alfabéticos.',
 						'is_unique' => 'El campo {field} debe contener un valor único.'
 					],
 				]
@@ -344,7 +340,15 @@ class Settings extends BaseController
 			endif;
 
 			$validate = $this->validate([
-				'division' => 'required|numeric|is_unique[divisions.division]',
+				'division' => [
+					'label' => 'División',
+					'rules' => 'required|numeric|is_unique[divisions.division]',
+					'errors' => [
+						'required' => 'El campo {field} es obligatorio.',
+						'numeric' => 'El campo {field} debe contener solo números.',
+						'is_unique' => 'El campo {field} debe contener un valor único.'
+					],
+				]
 			]);
 
 			if (!$validate) :
@@ -395,6 +399,24 @@ class Settings extends BaseController
 
 		echo json_encode($houses);
 	}
+	
+	/**
+	 * getSelectHouse
+	 *
+	 * @return void
+	 */
+	public function getSelectHouse()
+	{
+		$housesModel = new HousesModel();
+
+		// Search term
+		$searchTerm = $this->request->getVar('searchTerm');
+
+		// Get users
+		$response = $housesModel->selectHouses($searchTerm);
+
+		echo json_encode($response);
+	}
 
 	/**
 	 * addHouse
@@ -416,11 +438,12 @@ class Settings extends BaseController
 			$validate = $this->validate([
 				'house' => [
 					'label' => 'Casa',
-					'rules' => 'required|alpha_numeric_space|min_length[2]',
+					'rules' => 'required|alpha_numeric_space|min_length[2]|is_unique[houses.house]',
 					'errors' => [
 						'required' => 'En campo {field} es obligatorio.',
 						'alpha_numeric_space' => 'En campo {field} solo puede contener caracteres alfanuméricos y espacios.',
-						'min_length' => 'El campo {field} debe tener al menos 2 caracteres de longitud.'
+						'min_length' => 'El campo {field} debe tener al menos {param} caracteres de longitud.',
+						'is_unique' => 'El campo {field} debe contener un valor único.'
 					],
 				]
 			]);
@@ -432,8 +455,8 @@ class Settings extends BaseController
 			else :
 				$housesModel->save([
 					'id_house'	=> $this->request->getVar('id_house'),
-					'house'		=> ucfirst($this->request->getVar('house')),
-					'status'		=> $this->request->getVar('status'),
+					'house'		=> ucwords(strtolower($this->request->getVar('house'))),
+					'status'	=> $this->request->getVar('status'),
 				]);
 				echo "Success";
 			endif;
@@ -480,9 +503,12 @@ class Settings extends BaseController
 
 		$result = [];
 
-		//if (!empty($brands) && is_array($brands)) :
+		$brands = $brandsModel->getBrands();
 
-		foreach ($brandsModel->getBrands() as $brand) {
+
+		if (!empty($brands) && is_array($brands)) :
+
+		foreach ($brands as $brand) {
 			$result[] = [
 				'dataBrand' => $brand,
 				'house' => $housesModel->getHouses($brand['house_id'])
@@ -500,10 +526,10 @@ class Settings extends BaseController
 			];
 		}
 
-		//else :
-		//	$result = [];
+		else :
+			$result_2 = [];
 
-		//endif;
+		endif;
 
 		$brands = [
 			'data' => $result_2
@@ -522,7 +548,7 @@ class Settings extends BaseController
 	{
 		if ($this->request->isAJAX()) :
 
-			helper(['form', 'url']);
+			helper(['form']);
 			$brandsModel = new BrandsModel();
 
 			if ($this->request->getMethod() !== 'post') :
@@ -530,18 +556,39 @@ class Settings extends BaseController
 			endif;
 
 			$validate = $this->validate([
-				'brand' => 'required|alpha_numeric|min_length[2]',
+
+				'brand' => [
+					'label' => 'Marca',
+					'rules' => 'required|alpha_numeric|min_length[2]|is_unique[brands.brand]',
+					'errors' => [
+						'required' => 'En campo {field} es obligatorio.',
+						'min_length' => 'El campo {field} debe tener al menos {param} caracteres de longitud.',
+						'is_unique' => 'El campo {field} debe contener un valor único.'
+					],
+				],
+				'house_id' => [
+					'label' => 'Casa',
+					'rules' => 'required',
+					'errors' => [
+						'required' => 'En campo {field} es obligatorio.',
+					],
+				],
 			]);
 
 			if (!$validate) :
 				$validation = $this->validator;
 				$data['validation'] = $validation;
-				echo $validation->getError();
+				$errors = $validation->getErrors();
+				foreach ($errors as $error) : 
+					echo ('<li>'.$error.'</li>');
+				endforeach;
+				
 			else :
 				$brandsModel->save([
 					'id_brand'	=> $this->request->getVar('id_brand'),
-					'brand'		=> ucfirst($this->request->getVar('brand')),
-					'status'		=> $this->request->getVar('status'),
+					'brand'		=> ucwords(strtolower($this->request->getVar('brand'))),
+					'status'	=> $this->request->getVar('status'),
+					'house_id'	=> $this->request->getVar('house_id'),
 				]);
 				echo "Success";
 			endif;
@@ -563,12 +610,124 @@ class Settings extends BaseController
 			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 		else :
 			$brandsModel = new BrandsModel();
+			$housesModel = new HousesModel();
 
 			$data['brands'] = $brandsModel->getBrands($id);
+			
+			$data['houses'] = $housesModel->getHouses($data['brands']['house_id']);
 
 			$data = [
-				'brand' => $data['brands']['brand'],
-				'status' 	=> $data['brands']['status']
+				'brand' 	=> $data['brands']['brand'],
+				'status' 	=> $data['brands']['status'],
+				'house_id' 	=> $data['brands']['house_id'],
+				'house' 	=> $data['houses']['house'],
+			];
+
+			echo json_encode($data);
+		endif;
+	}
+
+	/**
+	 * getcategory
+	 * ajax category
+	 *
+	 * @return void
+	 */
+	public function getcategory()
+	{
+		$categoriesModel = new CategoriesModel();
+
+		$categories = $categoriesModel->getCategories();
+
+		if (!empty($categories) && is_array($categories)) :
+
+			foreach ($categories as $category) {
+				$result[] = [
+					$category['id_category'],
+					$category['category'],
+					$category['status'] ? 'Activo' : 'Inactivo',
+					'<a href="javascript:void(0)"  onclick="edit_category(' . "'" . $category['id_category'] . "'" . ')"><i class="fa fa-pencil-alt"></i></a>',
+				];
+			}
+
+		else :
+			$result = [];
+
+		endif;
+
+		$categories = [
+			'data' => $result
+		];
+
+		echo json_encode($categories);
+	}
+
+	/**
+	 * addCategory
+	 * validated and create/update category
+	 *
+	 * @return void
+	 */
+	public function addCategory()
+	{
+		if ($this->request->isAJAX()) :
+
+			helper(['form']);
+			$categoriesModel = new CategoriesModel();
+
+			if ($this->request->getMethod() !== 'post') :
+				return redirect()->to(base_url('inventory/settings'));
+			endif;
+
+			$validate = $this->validate([
+				'category' => [
+					'label' => 'Categoría',
+					'rules' => 'required|alpha_numeric_space|min_length[2]|is_unique[categories.category]',
+					'errors' => [
+						'required' => 'El campo {field} es obligatorio.',
+						'alpha_numeric_space' => 'El campo {field} solo puede contener caracteres alfanuméricos y espacios.',
+						'min_length' => 'El campo {field} debe tener al menos {param} caracteres de longitud.',
+						'is_unique' => 'El campo {field} debe contener un valor único.'
+					],
+				]
+			]);
+
+			if (!$validate) :
+				$validation = $this->validator;
+				$data['validation'] = $validation;
+				echo $validation->getError();
+			else :
+				$categoriesModel->save([
+					'id_category'	=> $this->request->getVar('id_category'),
+					'category'		=> ucwords(strtolower($this->request->getVar('category'))),
+					'status'	=> $this->request->getVar('status'),
+				]);
+				echo "Success";
+			endif;
+
+		else :
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		endif;
+	}
+
+	/**
+	 * editCategory
+	 *
+	 * @param  mixed $id
+	 * @return void
+	 */
+	public function editCategory($id = null)
+	{
+		if (!$this->request->isAJAX()) :
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		else :
+			$categoriesModel = new CategoriesModel();
+
+			$data['categories'] = $categoriesModel->getCategiories($id);
+
+			$data = [
+				'category' => $data['categories']['category'],
+				'status' 	=> $data['categories']['status']
 			];
 
 			echo json_encode($data);

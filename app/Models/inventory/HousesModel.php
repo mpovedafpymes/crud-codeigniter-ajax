@@ -32,4 +32,19 @@ class HousesModel extends Model
 
         return $this->asArray()->where(['id_house' => $id])->first();
     }
+
+    public function selectHouses($searchTerm=""){
+        // Fetch House
+        $builder = $this->where("house like '%".$searchTerm."%' ");
+        $fetched_records = $builder->get();
+        $houses = $fetched_records->getResult('array');
+
+        // Initialize Array with fetched data
+        $data = array();
+        foreach($houses as $house){
+            $data[] = array("id"=>$house['id_house'], "text"=>$house['house']);
+        }
+
+        return $data;
+    }
 }

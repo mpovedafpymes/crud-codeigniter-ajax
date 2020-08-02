@@ -152,7 +152,7 @@
             <h4>Especificaciones del Producto</h4>
             <div class="toggle toggle-primary toggle-lg" data-plugin-toggle>
                 <!-- start: house -->
-                <section class="toggle active card">
+                <section class="toggle card">
                     <label>Casas</label>
                     <div class="toggle-content">
                         <div class="card-body">
@@ -179,7 +179,7 @@
                 <!-- end: house -->
 
                 <!-- start: brand -->
-                <section class="toggle active card">
+                <section class="toggle card">
                     <label>Marcas</label>
                     <div class="toggle-content">
                         <div class="card-body">
@@ -206,6 +206,33 @@
                     </div>
                 </section>
                 <!-- end: brand -->
+
+                <!-- start: categories -->
+                <section class="toggle card">
+                    <label>Categorías</label>
+                    <div class="toggle-content">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <button id="add_category" type="button" class="mb-1 mt-1 mr-1 btn btn-xs btn btn-primary" data-toggle="modal">Crear +</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-responsive-md table-hover table-sm mb-0" id="table-category">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Categoría</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <!-- end: categories -->
             </div>
         </div>
         <!-- end: product specifications -->
@@ -448,21 +475,22 @@
 </div>
 
 <!-- Modal brand -->
-<div class="modal fade modal-brand" tabindex="-1" role="dialog" aria-labelledby="houseModalLabel" aria-hidden="true">
+<div class="modal fade modal-brand" tabindex="-1" role="dialog" aria-labelledby="brandModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <section class="card">
                 <header class="card-header">
                     <h2 class="card-title"><?= isset($id) ? "Editar Marca" : "Crear Marca" ?></h2>
                 </header>
-                <?= form_open('inventory/settings/addHBrand', ['class' => 'form-horizontal', 'id' => 'formbrand'], ['id_brand' => isset($id) ? $id : '']); ?>
+                <?= form_open('inventory/settings/addBrand', ['class' => 'form-horizontal', 'id' => 'formbrand'], ['id_brand' => isset($id) ? $id : '']); ?>
 
                 <div class="warehouse card-body">
                     <div class="warehouse modal-wrapper">
 
                         <div class="alert alert-danger" id="msg-error-brand">
                             <strong>Importante!</strong>
-                            <div class="list-errors"></div>
+                            <div class="list-errors">
+                            </div>
                         </div>
 
                         <div class="modal-text">
@@ -470,6 +498,61 @@
                                 <?= form_label('Marca:', 'brand', $attributes_label); ?>
                                 <div class="col-sm-8">
                                     <?= form_input('brand', '', $attributes_text); ?>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <?= form_label('Casa:', 'house_id', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <select class="js-house form-control mb-3" id="house_id" name="house_id">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <?= form_label('Estado:', 'status', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <?= form_dropdown('status', ['1' => 'Activo', '0' => 'Inactivo'], '1', $attributes_text); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <input type='submit' id="save" value='Guardar' class='btn btn-primary'>
+                            <?= form_button('', 'Cancelar', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                        </div>
+                    </div>
+                </footer>
+                <?= form_close(); ?>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal category -->
+<div class="modal fade modal-category" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <section class="card">
+                <header class="card-header">
+                    <h2 class="card-title"><?= isset($id) ? "Editar Categoría" : "Crear Categoría" ?></h2>
+                </header>
+                <?= form_open('inventory/settings/addCategory', ['class' => 'form-horizontal', 'id' => 'formcategory'], ['id_category' => isset($id) ? $id : '']); ?>
+
+                <div class="warehouse card-body">
+                    <div class="warehouse modal-wrapper">
+
+                        <div class="alert alert-danger" id="msg-error-category">
+                            <strong>Importante!</strong>
+                            <div class="list-errors"></div>
+                        </div>
+
+                        <div class="modal-text">
+                            <div class="form-group row">
+                                <?= form_label('Categoría:', 'category', $attributes_label); ?>
+                                <div class="col-sm-8">
+                                    <?= form_input('category', '', $attributes_text); ?>
                                 </div>
                             </div>
                             <div class="form-group row">
